@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="Where all Baggins Systemd is the new kid on the block of init systems for Linux that aimed to be the new standard and indeed it did.
+It claims to be an extremely fast and integrated init system with aggressive parallelization capabilities, socket management, mount points manager, all using D-BUS and cgroups technologies. Most modern distros and OSes like Arch Linux, CoreOS, Debian, Fedora, Gentoo, Red Hat, Ubuntu, and so on use it a default init system, so its ambitions are confirmed.">
+
+<meta property="og:title" content="Systemd: One service to rule them all" />
+<meta property="og:description" content="Where all Baggins Systemd is the new kid on the block of init systems for Linux that aimed to be the new standard and indeed it did.
+It claims to be an extremely fast and integrated init system with aggressive parallelization capabilities, socket management, mount points manager, all using D-BUS and cgroups technologies. Most modern distros and OSes like Arch Linux, CoreOS, Debian, Fedora, Gentoo, Red Hat, Ubuntu, and so on use it a default init system, so its ambitions are confirmed." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://lionclan.org/blog/systemd-one-service-to-rule-them-all/" />
+
+
+
+<meta property="article:published_time" content="2017-10-19T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-10-19T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Systemd: One service to rule them all 
+
+</title>
+<link rel="canonical" href="https://lionclan.org/blog/systemd-one-service-to-rule-them-all/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="https://lionclan.org/css/reset.css">
+    <link rel="stylesheet" href="https://lionclan.org/css/pygments.css">
+    <link rel="stylesheet" href="https://lionclan.org/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://lionclan.org/img/favicon.png"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+            <a href="https://lionclan.org/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="hiroru" target="_blank" rel="noopener"><img class="icon" src="https://lionclan.org/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="sergibarroso" target="_blank" rel="noopener"><img class="icon" src="https://lionclan.org/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+            <a href="sergibarroso" target="_blank" rel="noopener"><img class="icon" src="https://lionclan.org/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+
+        
+
+        
+            <a href="mailto:hiroru@lionclan.org"><img class="icon" src="https://lionclan.org/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="https://lionclan.org/index.xml"><img class="icon" src="https://lionclan.org/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Systemd: One service to rule them all
+
+</div>
+
+                    <div class="initials"><a href="https://lionclan.org/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Oct 19 2017 00:00:00 UTC'>Oct 19, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>12 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<h3 id="where-all-baggins">Where all Baggins</h3>
+
+<p>Systemd is the new kid on the block of init systems for Linux that aimed to be the new standard and indeed it did.</p>
+
+<p>It claims to be an extremely fast and integrated init system with aggressive parallelization capabilities, socket management, mount points manager, all using D-BUS and cgroups technologies. Most modern distros and OSes like Arch Linux, CoreOS, Debian, Fedora, Gentoo, Red Hat, Ubuntu, and so on use it a default init system, so its ambitions are confirmed.</p>
+
+<p>In this post we will talk about it and the basics to get used with common systemd tools. So, don&rsquo;t afraid and remember it&rsquo;s a dangerous business, Sysops, going out your binary door. You step onto the code, and if you don&rsquo;t keep your feet, there&rsquo;s no knowing where you might be swept off to<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>.</p>
+
+<h3 id="inside-systemd-s-deep">Inside systemd&rsquo;s deep</h3>
+
+<p>Let&rsquo;s get a deeper view of what&rsquo;s systemd and how it works. Systemd is the first binary start before the kernel, in fact, it&rsquo;s the kernel itself who run it.</p>
+
+<p>Systemd is an init system, and as an init system its purpose is to manage all user land components and services. To perform such a glorious task a huge bundle of binaries work together to manage almost everything from our systems.</p>
+
+<p>They replaces the startup scripts from SysV, BSD init or OpenRC for unit Files and runlevels for Targets as long as manage common services such as login with logind, logs with journald, network with networkd, device manager with udev, scheduled execution (cron), locales, time and date and hostnames.</p>
+
+<p>Take a look to the below image from Wikipedia<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup> where you can see almost every binary involved in systemd. Keep in mind that systemd is growing everyday, so may not be complete but enough for the scope of this post.</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Systemd_components.svg/640px-Systemd_components.svg.png" alt="systemd components" /></p>
+
+<p>In this introduction post we will focus in the below component list:</p>
+
+<ul>
+<li><strong>systemd</strong>: the service itself.</li>
+<li><strong>systemctl</strong>: the user tool to manage systemd.</li>
+<li><strong>systemd-analyze</strong>: the systemd boot process analyser.</li>
+<li><strong>journald</strong>: the logger daemon.</li>
+</ul>
+
+<h5 id="targets">Targets</h5>
+
+<p>Targets from systemd are slightly different from runlevels. Targets are named instead of numbered and , unlike runlevels, there&rsquo;s the possibility to have multiple ones active at the same time.</p>
+
+<p>A <em>target</em> file looks like this:</p>
+
+<pre><code>[Unit]
+Description=NFS client services
+Before=remote-fs-pre.target
+Wants=remote-fs-pre.target
+
+Wants=nfs-blkmap.service
+After=nfs-blkmap.service
+
+# GSS services dependencies and ordering
+Wants=auth-rpcgss-module.service
+After=rpc-gssd.service rpc-svcgssd.service gssproxy.service
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=remote-fs.target
+</code></pre>
+
+<p>To list all targets defined in our system we could run:</p>
+
+<pre><code>systemctl list-units --type=target
+</code></pre>
+
+<pre><code>UNIT                   LOAD   ACTIVE SUB    DESCRIPTION
+basic.target           loaded active active Basic System
+cryptsetup.target      loaded active active Encrypted Volumes
+getty.target           loaded active active Login Prompts
+graphical.target       loaded active active Graphical Interface
+local-fs-pre.target    loaded active active Local File Systems (Pre)
+local-fs.target        loaded active active Local File Systems
+multi-user.target      loaded active active Multi-User System
+network-online.target  loaded active active Network is Online
+network.target         loaded active active Network
+nfs-client.target      loaded active active NFS client services
+nss-user-lookup.target loaded active active User and Group Name Lookups
+paths.target           loaded active active Paths
+remote-fs-pre.target   loaded active active Remote File Systems (Pre)
+remote-fs.target       loaded active active Remote File Systems
+rpcbind.target         loaded active active RPC Port Mapper
+slices.target          loaded active active Slices
+sockets.target         loaded active active Sockets
+sound.target           loaded active active Sound Card
+swap.target            loaded active active Swap
+sysinit.target         loaded active active System Initialization
+time-sync.target       loaded active active System Time Synchronized
+timers.target          loaded active active Timers
+</code></pre>
+
+<p>To see which is the default target in our system we should run:</p>
+
+<pre><code>systemctl get-default
+</code></pre>
+
+<p>You can learn more about it in the freedesktop documentation<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup></p>
+
+<h5 id="unit-files">Unit files</h5>
+
+<p>As we said after, systemd uses unit files that replace the traditional shell scripts used in other init systems. These unit files uses declarative programming language<sup class="footnote-ref" id="fnref:4"><a rel="footnote" href="#fn:4">4</a></sup> to describe its usage.</p>
+
+<p>Every kind of system utility use a specific unit file type: service, socket, device, mount, target, path, timer (cron job), snapshot, slice and scope.</p>
+
+<p>These unit files are commonly located in three different paths in our systems (may change in some distros):</p>
+
+<ul>
+<li><strong><em>/usr/lib/systemd/system/</em></strong> for units provided by installed packages.</li>
+<li><strong><em>/etc/systemd/system/</em></strong> for system-wide units placed/customized by the system administrator.</li>
+<li><strong><em>~/.config/systemd/</em></strong> for units defined or customized by system users.</li>
+</ul>
+
+<p>Let&rsquo;s analyse the content of a unit file by running <code>systemctl cat SERVICE_NAME</code>. The below file it&rsquo;s from Debian&rsquo;s sshd unit:</p>
+
+<pre><code>systemctl cat sshd.service
+</code></pre>
+
+<pre><code># /lib/systemd/system/ssh.service
+[Unit]
+Description=OpenBSD Secure Shell server
+After=network.target auditd.service
+ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
+
+[Service]
+EnvironmentFile=-/etc/default/ssh
+ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=sshd.service
+</code></pre>
+
+<p>The unit files start with [Unit] section is where service information are defined. There are a brief description of service, dependencies (for example in that case systemd knows that couldn&rsquo;t start this service before network and audit are running) and finally a condition to be checked before start (in this example if the path <em>/etc/ssh/sshd_not_to_be_run</em> exist, sshd will not be started).</p>
+
+<p>The following section is [Service] where the information about what and how services are managed is defined. For example, notice that ExecStart is the command systemd will run to start this service. How to reload (ExecReload) and stop it (KillMode) is also defined.</p>
+
+<p>EnvironmentFile is the default config file for the service but see that in this example the file path goes after &ldquo;-&rdquo; symbol. That symbol is not trivial, it says that if the file doesn&rsquo;t exist ignore the errors and continue, you can read more about it in the official documentation<sup class="footnote-ref" id="fnref:5"><a rel="footnote" href="#fn:5">5</a></sup>.</p>
+
+<p>The KillMode defines how the services are stopped, in that case only the process named ssh will be stopped, nothing more, there&rsquo;s other behaviours available, for example to kill all processes from the same cgroups group. You can read more about it in the man pages<sup class="footnote-ref" id="fnref:6"><a rel="footnote" href="#fn:6">6</a></sup>.</p>
+
+<p>In the last section named [Install] there&rsquo;s the information about service location and alias which are a list of additional names for this service.</p>
+
+<p>Ok, we&rsquo;re going at a good pace!</p>
+
+<h3 id="we-swears-to-serve-the-master-of-the-services">We swears to serve the master of the services</h3>
+
+<p>Let&rsquo;s go to see how we can manage these unit files we have in our system. To operate with systemd we shall use a tool named <code>systemdctl</code>. If we would like to modify system services remember to run every command with <code>sudo</code> or by any system user alter services status.</p>
+
+<h5 id="starting-stopping-and-restarting-services">Starting, stopping and restarting services</h5>
+
+<p>To start a systemd service and run the instructions in the service&rsquo;s unit file, we should use the start command:</p>
+
+<pre><code>systemctl start sshd.service
+</code></pre>
+
+<p>Notice that we can skip the &ldquo;.service&rdquo; because systemd will always look for &ldquo;*.service&rdquo; files for managing a service. So running this has the same behaviour:</p>
+
+<pre><code>systemctl start sshd
+</code></pre>
+
+<p>In the same way, to stop a service we will run:</p>
+
+<pre><code>systemctl stop ssh.service
+</code></pre>
+
+<p>or:</p>
+
+<pre><code>systemctl stop ssh
+</code></pre>
+
+<p>And even to restart or reload it:</p>
+
+<pre><code>systemctl restart ssh
+</code></pre>
+
+<p>and:</p>
+
+<pre><code>systemctl reload ssh
+</code></pre>
+
+<h5 id="enabling-and-disabling-services">Enabling and Disabling services</h5>
+
+<p>Enable and disable are used to tell systemd to start services automatically at boot or not. So, to enable set automatically start on boot for a service we will simply run:</p>
+
+<pre><code>systemctl enable sshd
+</code></pre>
+
+<p>By the contrary if we want to disable auto starting we should run:</p>
+
+<pre><code>systemctl disable sshd
+</code></pre>
+
+<h5 id="you-shall-not-start">You shall not start!</h5>
+
+<p>Systemd defined not only one but three levels of stopped status:</p>
+
+<ul>
+<li><p><strong>Stopped</strong>: stop simply terminates the running instance of the specified service but the service could be started again manually or during boot process. We can perform such action running: <code>systemctl stop ssh.service</code></p></li>
+
+<li><p><strong>Disabled</strong>: disabling a service will unhook it from starting boot process, it means that if we reboot the system this service will not be started. However we can still start it manually. To do that action we should run: <code>systemctl disable ssh.service</code>. Keep in mind that this process doesn&rsquo;t stop the current running service.</p></li>
+
+<li><p><strong>Masked</strong>: finally, the last one goes one step further. It follows the same behaviour from disable state and ensures that the specified service couldn&rsquo;t be started again by pointing de init hook of that service to <em>/dev/null</em>. This means that we can&rsquo;t start it again. To do that we run: <code>systemctl mask ssh.service</code>. Notice that we can&rsquo;t perform <code>systemctl start ssh.service</code> again.</p></li>
+</ul>
+
+<h3 id="not-all-those-who-failed-are-lost">Not all those who failed are lost</h3>
+
+<p>Let&rsquo;s take a look on how we check services status and manage the systemd itself.</p>
+
+<h5 id="check-system-status">Check system status</h5>
+
+<p>To check the status of all services managed by systemd we run:</p>
+
+<pre><code>systemctl status
+</code></pre>
+
+<p>The output will looks like this:</p>
+
+<pre><code>    State: running
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: lun 2016-03-07 07:53:46 CET; 2 days ago
+   CGroup: /
+           ├─  1 /sbin/init splash
+           ├─943 /sbin/cgmanager -m name=systemd
+           ├─system.slice
+           │ ├─avahi-daemon.service
+           │ │ ├─917 avahi-daemon: running [sbarroso-laptop.local
+           │ │ └─929 avahi-daemon: chroot helpe
+           │ ├─thermald.service
+           │ │ └─918 /usr/sbin/thermald --no-daemon --dbus-enable
+           │ ├─dbus.service
+           │ │ └─930 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+           │ ├─ModemManager.service
+           │ │ └─913 /usr/sbin/ModemManager
+           │ ├─cron.service
+           │ │ └─919 /usr/sbin/cron -f
+           │ ├─lvm2-lvmetad.service
+           │ │ └─427 /sbin/lvmetad -f
+           │ ├─wpa_supplicant.service
+           │ │ └─1122 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+           │ ├─libvirt-bin.service
+           │ │ ├─ 973 /usr/sbin/libvirtd
+           │ │ ├─1362 /usr/sbin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/default.conf --leasefile-ro --dhcp-script=/usr/lib/libvirt/libvirt_leaseshelper
+           │ │ └─1363 /usr/sbin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/default.conf --leasefile-ro --dhcp-script=/usr/lib/libvirt/libvirt_leaseshelper
+           │ ├─nfs-mountd.service
+           │ │ └─1004 /usr/sbin/rpc.mountd --manage-gids
+           │ ├─lightdm.service
+           │ │ ├─1236 /usr/sbin/lightdm
+           │ │ └─1273 /usr/bin/X -core :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+           │ ├─accounts-daemon.service
+           │ │ └─928 /usr/lib/accountsservice/accounts-daemon
+           │ ├─colord.service
+           │ │ └─990 /usr/lib/colord/colord
+           │ ├─atd.service
+           │ │ └─923 /usr/sbin/atd -f
+           │ ├─systemd-journald.service
+           │ │ └─421 /lib/systemd/systemd-journald
+           │ ├─udisks2.service
+
+[...]
+</code></pre>
+
+<p>Here we can see the general status description and the tree of units files running in our system.</p>
+
+<p>If we&rsquo;re looking for the status of a single service we can also run:</p>
+
+<pre><code>systemctl status ssh
+</code></pre>
+
+<p>Which will return not only the status but the last lines from log of that service. This is a nice overview for any system administrator :-)</p>
+
+<pre><code>● ssh.service - OpenBSD Secure Shell server
+   Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+   Active: active (running) since mié 2016-03-09 11:51:03 CET; 1s ago
+  Process: 10294 ExecReload=/bin/kill -HUP $MAINPID (code=exited, status=0/SUCCESS)
+ Main PID: 27971 (sshd)
+   CGroup: /system.slice/ssh.service
+           └─27971 /usr/sbin/sshd -D
+
+mar 09 11:51:03 sbarroso-laptop systemd[1]: Started OpenBSD Secure Shell server.
+mar 09 11:51:03 sbarroso-laptop sshd[27971]: Server listening on 0.0.0.0 port 22.
+mar 09 11:51:03 sbarroso-laptop sshd[27971]: Server listening on :: port 22.
+</code></pre>
+
+<h5 id="list-unit-files">List unit files</h5>
+
+<p>To get the list of all unit files with status information and description we should run:</p>
+
+<pre><code>systemctl -l list-units
+</code></pre>
+
+<p>Where we will get a long output with all services, targets, devices, sockets, etc :</p>
+
+<pre><code>UNIT                                                                                                       LOAD   ACTIVE SUB       DESCRIPTION
+docker.service                                                                 loaded active running   Docker Application Container Engine
+ebtables.service                                                               loaded active exited    LSB: ebtables ruleset management
+geoclue.service                                                                loaded active running   Location Lookup Service
+getty@tty1.service                                                             loaded active running   Getty on tty1
+grub-common.service                                                            loaded active exited    LSB: Record successful boot for GRUB
+ifup-wait-all-auto.service                                                     loaded active exited    Wait for all &quot;auto&quot; /etc/network/interfaces to be up for network-online.target
+irqbalance.service                                                             loaded active running   LSB: daemon to balance interrupts for SMP systems
+kerneloops.service                                                             loaded active running   LSB: Tool to automatically collect and submit kernel crash signatures
+kmod-static-nodes.service                                                      loaded active exited    Create list of required static device nodes for the current kernel
+
+[...]
+</code></pre>
+
+<p>The output has the following columns:</p>
+
+<ul>
+<li><p><strong>Unit</strong>: The unit name.</p></li>
+
+<li><p><strong>Load</strong>: The unit file was loaded by systemd and is kept in memory.</p></li>
+
+<li><p><strong>Active</strong>: A brief summary if the service was started successfully or not.</p></li>
+
+<li><p><strong>Sub</strong>: This indicates more detailed information about the unit which varies depending on unit type, state, and the actual method in which the unit runs.</p></li>
+
+<li><p><strong>Description</strong>: A description of what the service is/does.</p></li>
+</ul>
+
+<p>In that output we are able to see if any unit had a unexpected behaviour or not, but there&rsquo;s so much information to focus on that, so to review if were any problem during boot of the units we shall run:</p>
+
+<pre><code>systemctl --failed
+</code></pre>
+
+<p>And a great output is:</p>
+
+<pre><code>0 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use 'systemctl list-unit-files'.
+</code></pre>
+
+<h5 id="fly-you-fools">Fly you fools!</h5>
+
+<p>As we said before, systemd provides a tool called systemd-analyze that can be used to show timing details about the boot process, helping us to debug, analyse and improve boot performance of the system.</p>
+
+<p>If we run <code>systemd-analyze</code> it will tell us how long took system to start both kernel and user space:</p>
+
+<pre><code>Startup finished in 13.957s (kernel) + 2.477s (userspace) = 16.434s
+</code></pre>
+
+<p>If we want per unit information we should run <code>systemd-analyze blame</code> to get the following information:</p>
+
+<pre><code>          1.621s docker.service
+           870ms plymouth-quit-wait.service
+           731ms gpu-manager.service
+           691ms td-agent.service
+           503ms lvm2-monitor.service
+           417ms libvirt-bin.service
+           396ms dev-dm\x2d1.device
+           170ms ModemManager.service
+           157ms accounts-daemon.service
+           136ms colord.service
+           108ms systemd-localed.service
+            97ms virtualbox.service
+            90ms apparmor.service
+            82ms polkitd.service
+            65ms nfs-server.service
+            61ms thermald.service
+            59ms NetworkManager.service
+            56ms networking.service
+            54ms systemd-udev-trigger.service
+            53ms proc-fs-nfsd.mount
+
+[...]
+</code></pre>
+
+<h5 id="speak-journald-and-enter">Speak, journald, and enter</h5>
+
+<p>As we said, systemd has its own logging system called <em>journald</em>.</p>
+
+<p>To read the full log we use:</p>
+
+<pre><code>journalctl
+</code></pre>
+
+<p>This command prints each boot, kernel and user land log files, but, of course, we can show one by one independently, for example:</p>
+
+<p>To review the boot log:</p>
+
+<pre><code>journalctl -b
+</code></pre>
+
+<p>To review the kernel log:</p>
+
+<pre><code>journalctl -k
+</code></pre>
+
+<p>To get the log per one unit file:</p>
+
+<pre><code>journalctl -u ssh
+</code></pre>
+
+<pre><code>-- Logs begin at lun 2016-03-07 07:53:46 CET, end at mié 2016-03-09 14:21:59 CET. --
+mar 07 07:53:47 sbarroso-laptop systemd[1]: Started OpenBSD Secure Shell server.
+mar 07 07:53:47 sbarroso-laptop sshd[976]: Server listening on 0.0.0.0 port 22.
+mar 07 07:53:47 sbarroso-laptop sshd[976]: Server listening on :: port 22.
+mar 07 07:53:48 sbarroso-laptop systemd[1]: Reloading OpenBSD Secure Shell server.
+
+[...]
+</code></pre>
+
+<p>For us there are two parameters that are very useful on our daily basis:</p>
+
+<ul>
+<li><p><strong>&ndash;pager-end (-e)</strong>: This makes journalctl to immediately jump to the last lines. Very useful to see last events.</p></li>
+
+<li><p><strong>&ndash;follow (-f)</strong>: Follow the log entries. This is the &ldquo;A&rdquo; letter from the journalctl alphabet, that follows the log stream in real time.</p></li>
+</ul>
+
+<h3 id="the-road-goes-ever-on-and-on-down-from-the-door-where-it-began">The Road goes ever on and on, down from the door where it began&hellip;</h3>
+
+<p>This is just the end of the beginning, a brief review and training of systemd and its utilities. But the systemd world is huge and we can go as deeper as we want. So, if this post had caught your attention and awoke your hungry for knowledge it&rsquo;s your turn!! you have plenty of documents out there, so if you like reading we recommend you to start from the official ones<sup class="footnote-ref" id="fnref:7"><a rel="footnote" href="#fn:7">7</a></sup>. Otherwise if you like to scout the battlefield keep training by creating your own unit files and targets!</p>
+
+<p><em>Thanks to Lord of the Rings to make this post more pleasant with its wise quotes ;-)</em></p>
+
+<h3 id="references">References</h3>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1"><a href="https://en.wikipedia.org/wiki/The_Road_Goes_Ever_On_%28song%29">The Lord of the Rings quote</a>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2"><a href="https://en.wikipedia.org/wiki/File:Systemd_components.svg">Systemd_components.svg from Wikipedia</a>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3"><a href="https://www.freedesktop.org/software/systemd/man/systemd.target.html">Systemd.target man page</a>
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<li id="fn:4"><a href="https://en.wikipedia.org/wiki/Declarative_programming">Declarative programming</a>
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+<li id="fn:5"><a href="https://www.freedesktop.org/software/systemd/man/systemd.exec.html">Systemd.exec man page</a>
+ <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
+<li id="fn:6"><a href="https://www.freedesktop.org/software/systemd/man/systemd.kill.html">Systemd.kill man page</a>
+ <a class="footnote-return" href="#fnref:6"><sup>[return]</sup></a></li>
+<li id="fn:7"><a href="https://www.freedesktop.org/wiki/Software/systemd/">Systemd at freedesktop.org</a>
+ <a class="footnote-return" href="#fnref:7"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+                <br>
+		<p><a href="https://lionclan.org/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+
