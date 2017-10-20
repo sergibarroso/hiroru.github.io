@@ -3,30 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://lionclan.org/about/</loc>
-    <lastmod>2017-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lionclan.org/blog/hugos-on-the-block/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://lionclan.org/blog/systemd-one-service-to-rule-them-all/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://lionclan.org/</loc>
-    <lastmod>2017-10-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://lionclan.org/blog/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>https://lionclan.org/about/</loc>
   </url>
   
   <url>
@@ -39,14 +21,11 @@
   </url>
   
   <url>
-    <loc>https://lionclan.org/tags/linux/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>https://lionclan.org/license/</loc>
   </url>
   
   <url>
     <loc>https://lionclan.org/tags/</loc>
-    <lastmod>2017-10-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

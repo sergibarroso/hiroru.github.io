@@ -7,7 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2017 Sergi Barroso</copyright>
-    <lastBuildDate>Fri, 20 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://lionclan.org/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +14,7 @@
     <item>
       <title>About</title>
       <link>https://lionclan.org/about/</link>
-      <pubDate>Fri, 20 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://lionclan.org/about/</guid>
       <description>Hi! My name is Sergi Barroso, I&amp;rsquo;m an 80&amp;rsquo;s geek born in Barcelona but actually living in Munich [ and hopefully in Japan sometime :) ]
@@ -24,32 +23,24 @@ I&amp;rsquo;m passionate about computers/software/games/sports/Japan/and probabl
     </item>
     
     <item>
-      <title>Hugo&#39;s on the block</title>
-      <link>https://lionclan.org/blog/hugos-on-the-block/</link>
-      <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://lionclan.org/blog/hugos-on-the-block/</guid>
-      <description>This is my first post</description>
-    </item>
-    
-    <item>
-      <title>Systemd: One service to rule them all</title>
-      <link>https://lionclan.org/blog/systemd-one-service-to-rule-them-all/</link>
-      <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://lionclan.org/blog/systemd-one-service-to-rule-them-all/</guid>
-      <description>Where all Baggins Systemd is the new kid on the block of init systems for Linux that aimed to be the new standard and indeed it did.
-It claims to be an extremely fast and integrated init system with aggressive parallelization capabilities, socket management, mount points manager, all using D-BUS and cgroups technologies. Most modern distros and OSes like Arch Linux, CoreOS, Debian, Fedora, Gentoo, Red Hat, Ubuntu, and so on use it a default init system, so its ambitions are confirmed.</description>
-    </item>
-    
-    <item>
       <title>Home</title>
       <link>https://lionclan.org/home/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://lionclan.org/home/</guid>
-      <description>This is the home page. It will display the blog section if there is one, and a text before.
-Hey ! Welcome to the Cocoa Enhanced theme. Here are some articles :</description>
+      <description>Hey! Welcome to my personal site. Here are some articles:</description>
+    </item>
+    
+    <item>
+      <title>License</title>
+      <link>https://lionclan.org/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://lionclan.org/license/</guid>
+      <description>You can use this page to put a license on the contents of your blog, like so:
+ The MIT License (MIT)
+Copyright &amp;copy; 2015 Nishanth Shanmughamnishanth.gerrard@gmail.com
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
     </item>
     
   </channel>
