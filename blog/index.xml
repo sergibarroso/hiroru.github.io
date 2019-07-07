@@ -2,34 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on &gt; Sergi Barroso_</title>
-    <link>https://lionclan.org/blog/</link>
+    <link>https://sergibarroso.me/blog/</link>
     <description>Recent content in Blogs on &gt; Sergi Barroso_</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright © 2017 Sergi Barroso</copyright>
     <lastBuildDate>Thu, 19 Oct 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://lionclan.org/blog/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+
+	<atom:link href="https://sergibarroso.me/blog/index.xml" rel="self" type="application/rss+xml" />
+
+
     <item>
       <title>Hugo&#39;s on the block</title>
-      <link>https://lionclan.org/blog/hugos-on-the-block/</link>
+      <link>https://sergibarroso.me/blog/hugos-on-the-block/</link>
       <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://lionclan.org/blog/hugos-on-the-block/</guid>
+
+      <guid>https://sergibarroso.me/blog/hugos-on-the-block/</guid>
       <description>This is my first post</description>
     </item>
-    
+
     <item>
       <title>Systemd: One service to rule them all</title>
-      <link>https://lionclan.org/blog/systemd-one-service-to-rule-them-all/</link>
+      <link>https://sergibarroso.me/blog/systemd-one-service-to-rule-them-all/</link>
       <pubDate>Thu, 19 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://lionclan.org/blog/systemd-one-service-to-rule-them-all/</guid>
+
+      <guid>https://sergibarroso.me/blog/systemd-one-service-to-rule-them-all/</guid>
       <description>Where all Baggins Systemd is the new kid on the block of init systems for Linux that aimed to be the new standard and indeed it did.
 It claims to be an extremely fast and integrated init system with aggressive parallelization capabilities, socket management, mount points manager, all using D-BUS and cgroups technologies. Most modern distros and OSes like Arch Linux, CoreOS, Debian, Fedora, Gentoo, Red Hat, Ubuntu, and so on use it a default init system, so its ambitions are confirmed.</description>
     </item>
-    
+
   </channel>
 </rss>
