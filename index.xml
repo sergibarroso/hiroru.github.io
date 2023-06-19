@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About me on Sergi Barroso</title>
-    <link>https://sergibarroso.me/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content in About me on Sergi Barroso</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>&amp;copy;2022 Sergi Barroso</copyright><atom:link href="https://sergibarroso.me/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&amp;copy;2023 Sergi Barroso</copyright><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://sergibarroso.me/values/</link>
+      <link>http://localhost:1313/values/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://sergibarroso.me/values/</guid>
+      <guid>http://localhost:1313/values/</guid>
       <description>Personal values Empathy High standards Good isn&amp;rsquo;t good enough. All work has to be top notch
 Meaningful long-term Make short term sacrifices for long term success
 Ownership is key Don&amp;rsquo;t blame others, make excuses. Taking ownership is synonym of being resourceful and creative to find solutions
@@ -22,10 +22,10 @@ Truth driven Be honest and transparent to everybody (including yourself)</descri
     
     <item>
       <title>test</title>
-      <link>https://sergibarroso.me/test/</link>
+      <link>http://localhost:1313/test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://sergibarroso.me/test/</guid>
+      <guid>http://localhost:1313/test/</guid>
       <description>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc.</description>
     </item>
     
