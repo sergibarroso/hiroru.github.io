@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sergi Barroso</title>
-    <link>https://sergibarroso.me/</link>
+    <link>https://sergibarroso.xyz/</link>
     <description>Recent content on Sergi Barroso</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-US</language>
-    <copyright>&amp;copy;2023 Sergi Barroso</copyright>
-    <atom:link href="https://sergibarroso.me/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&amp;copy;2024 Sergi Barroso</copyright>
+    <atom:link href="https://sergibarroso.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://sergibarroso.me/values.html</link>
+      <link>https://sergibarroso.xyz/values.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://sergibarroso.me/values.html</guid>
-      <description>Personal values Empathy High standards Good isn&amp;rsquo;t good enough. All work has to be top notch&#xA;Meaningful long-term Make short term sacrifices for long term success&#xA;Ownership is key Don&amp;rsquo;t blame others, make excuses. Taking ownership is synonym of being resourceful and creative to find solutions&#xA;Data driven God feeling is helpful for personal things but not for scientific solutions&#xA;Truth driven Be honest and transparent to everybody (including yourself)</description>
+      <guid>https://sergibarroso.xyz/values.html</guid>
+      <description>&lt;h1 id=&#34;personal-values&#34;&gt;Personal values&lt;/h1&gt;&#xA;&lt;h2 id=&#34;empathy&#34;&gt;Empathy&lt;/h2&gt;&#xA;&lt;h2 id=&#34;high-standards&#34;&gt;High standards&lt;/h2&gt;&#xA;&lt;p&gt;Good isn&amp;rsquo;t good enough. All work has to be top notch&lt;/p&gt;&#xA;&lt;h2 id=&#34;meaningful-long-term&#34;&gt;Meaningful long-term&lt;/h2&gt;&#xA;&lt;p&gt;Make short term sacrifices for long term success&lt;/p&gt;&#xA;&lt;h2 id=&#34;ownership-is-key&#34;&gt;Ownership is key&lt;/h2&gt;&#xA;&lt;p&gt;Don&amp;rsquo;t blame others, make excuses. Taking ownership is synonym of being resourceful and creative to find solutions&lt;/p&gt;&#xA;&lt;h2 id=&#34;data-driven&#34;&gt;Data driven&lt;/h2&gt;&#xA;&lt;p&gt;God feeling is helpful for personal things but not for scientific solutions&lt;/p&gt;&#xA;&lt;h2 id=&#34;truth-driven&#34;&gt;Truth driven&lt;/h2&gt;&#xA;&lt;p&gt;Be honest and transparent to everybody (including yourself)&lt;/p&gt;</description>
     </item>
     <item>
       <title>test</title>
-      <link>https://sergibarroso.me/test.html</link>
+      <link>https://sergibarroso.xyz/test.html</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://sergibarroso.me/test.html</guid>
-      <description>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc.</description>
+      <guid>https://sergibarroso.xyz/test.html</guid>
+      <description>&lt;p&gt;Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
